@@ -1,12 +1,74 @@
+
 <!doctype html>
 <html>
     <head>
         <meta charset="utf-8">
-        <title>My Web Page</title>
+        <title>Nazneen's Web Page</title>
+        <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
+        <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
     </head>
 
-    <body>
-        <!-- This is a comment -->
-        <h1>Hello World!</h1>
+    <body style="background-image: url(flower.jpg) ">
+     <div style = "background-color: antiquewhite; widows: 100%;">  
+        <h1> Note taking application</h1>
+        <h2> [automatic save ] </h2>
+    </div>
+        <div id="notification" contenteditable style="background-color:maroon; color: white ;width:700px; height:300px;"></div>
+   <div style="background-color: bisque; width: 100%" id="count">
+</div>
+        <button style="background-color: mediumaquamarine" onclick="save()">Save Text</button>
+        <button style="background-color: mediumaquamarine" onclick="erase()">Erase Text</button>
+        
+        
+        <p id="savedmessage"></p>
+
+   
+     
+        
+        <script>
+            const fs = new Filer.FileSystem(); 
+        
+            window.addEventListener('DOMContentLoaded', (event) => {
+                fs.readFile('/note', 'utf8', function (err, data) {
+                    if (err) {
+                        document.querySelector('#notification').innerHTML = "Type Here";   
+                    } else {
+                        document.querySelector('#notification').innerHTML = data; 
+                    }
+                });
+            });
+
+            var saveInterval = window.setInterval(writeFile, 5500);
+
+            var countInterval = window.setInterval(wordCount, 150);
+
+            function erase() {
+                document.querySelector("#notification").innerHTML = "";
+            }
+            
+            function wordCount() {
+                var count = document.querySelector("#notification").innerHTML.trim().replace(/  +/g, ' ').split(' ').length;
+                if (document.querySelector("#notification").innerHTML.length == 0) count = 0;
+                document.querySelector("#count").innerHTML = "Count: " + count; 
+            }
+
+            function writeFile() {
+                fs.writeFile('/note', document.querySelector('#notification').innerHTML, function (err) {
+                    if (err) throw err; 
+                    else {
+                        console.log("autosave")
+                    }
+                    });
+            }
+
+            function save() {
+                writeFile(); 
+                document.querySelector("#savedmessage").innerHTML = "Note was manually saved..."
+                setTimeout(function() {
+                    document.querySelector("#savedmessage").innerHTML = ""
+                }, 2000);
+            }
+
+        </script>
     </body>
 </html>
