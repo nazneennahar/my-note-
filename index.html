@@ -11,19 +11,21 @@
         <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
     </head>
 
+
     <body style="background-image: url(flower.jpg); width: 700px; margin: 0 auto">
         <div style="background-color: antiquewhite; border: black; border-style: solid">
             <div style = "background-color: antiquewhite; widows: 100%;  text-align: center">  
                 <h1> Note taking application</h1>
                 <h2> [automatic save ] </h2>
             </div>
-            <div id="notification" contenteditable style="background-color:maroon; color: white ; height:300px;"></div>
+            <div id="notification" contenteditable style="background-color:maroon; color: white ; height:300px; overflow-y:auto !important;""></div>
             <div style="background-color: bisque; width: 700px;" id="count"></div>
             <button style="background-color: mediumaquamarine" onclick="save()">Save Text</button>
             <button style="background-color: mediumaquamarine" onclick="erase()">Erase Text</button>
             <p id="savedmessage"></p>
         </div>
     </body>
+
    
      
         
